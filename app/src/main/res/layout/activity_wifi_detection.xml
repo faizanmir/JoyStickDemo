@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WifiDetection"
+    android:background="#9FC048"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:text="Scan for Devices"
+        android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_above="@id/wifiRecyclerView"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_margin="20dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/wifiRecyclerView"
+        android:layout_centerHorizontal="true"
+        android:background="#33abc7"
+        >
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan"
+        android:layout_margin="20dp"
+        android:id="@+id/scanWifi"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/apply_button"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/stopScan"
+        android:layout_margin="20dp"
+        android:background="@drawable/apply_button"
+        />
+
+
+
+</RelativeLayout>
