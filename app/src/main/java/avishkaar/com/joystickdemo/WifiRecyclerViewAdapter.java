@@ -11,14 +11,14 @@ import java.util.ArrayList;
 
 
 public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerViewAdapter.WifiNetworkViewHolder> {
-    ArrayList<String> wifiScanResult;
+    private ArrayList<String> wifiScanResult;
     interface SSIDPass{
         void passSSID(String SSID);
     }
     SSIDPass ref;
 
 
-    public WifiRecyclerViewAdapter(ArrayList<String> wifiScanResult, SSIDPass ref) {
+    WifiRecyclerViewAdapter(ArrayList<String> wifiScanResult, SSIDPass ref) {
         this.wifiScanResult = wifiScanResult;
         this.ref = ref;
     }
@@ -53,7 +53,7 @@ public class WifiRecyclerViewAdapter extends RecyclerView.Adapter<WifiRecyclerVi
         TextView networkAddress;
 
 
-        public WifiNetworkViewHolder(@NonNull View itemView) {
+       WifiNetworkViewHolder(@NonNull View itemView) {
             super(itemView);
             networkAddress = itemView.findViewById(R.id.networkName);
             networkName = itemView.findViewById(R.id.ssid);

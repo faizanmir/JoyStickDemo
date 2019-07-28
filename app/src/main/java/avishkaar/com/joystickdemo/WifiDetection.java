@@ -36,7 +36,7 @@ public class WifiDetection extends AppCompatActivity implements  DialogAlert.dia
         wifiRecyclerViewAdapter = new WifiRecyclerViewAdapter(scanResults, new WifiRecyclerViewAdapter.SSIDPass() {
             @Override
             public void passSSID(String SSID) {
-                Log.e(TAG, "passSSID: " + SSID  );
+                Log.e(TAG, "SSID: " + SSID  );
                 DialogAlert obj = new DialogAlert();
                 obj.recieveSSID(SSID);
                 obj.show(getSupportFragmentManager(),"DialogTag");
@@ -51,7 +51,6 @@ public class WifiDetection extends AppCompatActivity implements  DialogAlert.dia
             @Override
             public void onReceive(Context context, Intent intent) {
                 networks = wifiManager.getScanResults();
-                Log.e(TAG, "onReceive: " + networks.size() );
                 for (ScanResult result:networks
                      ) {
                     scanResults.add(result.SSID);
@@ -66,7 +65,7 @@ public class WifiDetection extends AppCompatActivity implements  DialogAlert.dia
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "onClick: " + "Scan Started" );
+                Log.e(TAG, "onClick: " + "Scan Started..." );
                 scanResults.clear();
                 wifiManager.startScan();
             }
@@ -82,8 +81,6 @@ public class WifiDetection extends AppCompatActivity implements  DialogAlert.dia
        stop = findViewById(R.id.stopScan);
        networks = new ArrayList<>();
        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-
     }
 
 

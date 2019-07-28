@@ -1,5 +1,4 @@
 package avishkaar.com.joystickdemo;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -24,14 +23,19 @@ public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, Vie
     interface JoystickListener{
         void onJoystickMoved(float x, float y ,int id);
         void onUserUnpress(float x,float y);
+        void joystickAngle(int angle);
     }
 
 
     void setUpDimensions()
     {
+
         centerX = (float) getWidth()/2;
+
         centerY = (float) getHeight()/2;
+
         baseRadius =(float) Math.min(getWidth()/2,getHeight()/2);
+
         hatRadius = (float) Math.min(getWidth()/2,getHeight()/2)/3;
 
     }
@@ -48,9 +52,13 @@ public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, Vie
 
     public JoyStick(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         getHolder().addCallback(this);
+
         setOnTouchListener(this);
+
         Log.e(TAG, "JoyStick: " + "JoyStick Created with id " + getId() );
+
         if(context instanceof JoystickListener)
         {
             joystickCallback =  (JoystickListener)context;
@@ -58,9 +66,13 @@ public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, Vie
     }
 
     public JoyStick(Context context, AttributeSet attrs, int defStyleAttr) {
+
         super(context, attrs, defStyleAttr);
+
         getHolder().addCallback(this);
+
         setOnTouchListener(this);
+
         if(context instanceof JoystickListener)
         {
             joystickCallback =  (JoystickListener)context;
@@ -94,6 +106,9 @@ public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, Vie
               colors.setStrokeWidth(3);
               colors.setAntiAlias(true);
               myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+              //PORTER DUFF ='s RESPECT
+
               colors.setARGB(255, 50, 50, 50);
               myCanvas.drawCircle(centerX, centerY, baseRadius, colors);
               colors.setARGB(255, 100, 100, 100);
@@ -115,6 +130,7 @@ public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, Vie
                 float displacement = (float) Math.sqrt(Math.pow(event.getX()-centerX,2)+Math.pow(event.getY()-centerY,2));
                 if(displacement<baseRadius) {
                     drawJoyStick(event.getX(), event.getY());
+                    joystickCallback.joystickAngle( getAngle(event.getX(),event.getY()));
                     joystickCallback.onJoystickMoved((event.getX()-centerX)/baseRadius,(event.getY()-centerY)/baseRadius,getId());
                 }else
                 {
@@ -126,13 +142,27 @@ public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, Vie
 
                 }
             }
-            else
+            else if(event.getAction()!= MotionEvent.ACTION_DOWN)
             {
                 drawJoyStick(centerX,centerY);
                 joystickCallback.onUserUnpress(0,0);
             }
 
+
+
         }
         return true;
+    }
+
+
+
+
+
+    private int getAngle(float mPosY,float mPosX) {
+        int intPosY =  (int )Math.round(mPosY);
+        int intPosX  = (int)Math.round(mPosX);
+
+        int angle = (int) Math.toDegrees(Math.atan2(centerY - intPosY, intPosX - centerX));
+        return angle < 0 ? angle + 360 : angle; // make it as a regular counter-clock protractor
     }
 }
